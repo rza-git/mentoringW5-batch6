@@ -1,173 +1,124 @@
-// OOP = Object Oriented Programming
+// Object Oriented Programming (OOP)
 
+// Class
+// Object
+
+// Mau bikin cluster perumahan
+
+// Class ==> Design rumah + blueprintnya
+// Object ==> Rumah aslinya
+
+// Home
+// - jendela
+// - pintu
+// - atap
+// - lantai
+
+// Object rumah
+// jendela 5
+// pintu ada 8
+// atap warna hitam
+// lantai 2
+
+// Class
 class Product {
 
-    static counter = 0;
-    
-    constructor(title, sku, quantity, price) {
+    // set properties
+    constructor(title, sku, price, stock) {
         this.title = title;
         this.sku = sku;
-        this.quantity = quantity;
         this.price = price;
-
-
-        Product.counter++
+        this.stock = stock;
     }
 
-    // method
-    setTitle(title) {
-        this.title = title;
-    }
-
-    // METHOD OVERRIDING / POLYMORPHISM
-
-    showType() {
-        console.log("Type Product")
-    }
-
-}
-
-// INHERITANCE
-
-class Electronic extends Product {
-
-    static counter = 0;
-    constructor(title, quantity, price) {
-        // string literal
-        super(title, `ELEKTRONIK-${Electronic.counter}`, quantity, price);
-        Electronic.counter++;
-    }
-
-    showType() {
-        console.log("Type Electronic")
+    // methods
+    printInfo() {
+        console.log(`Title: ${this.title}\nSKU: ${this.sku}\nPrice: ${this.price}\nStock: ${this.stock}`)
     }
 }
+ 
+// Object
+const microwave = new Product("Microwave", "Elektro001", 4000000, 100);
+const refrigerator = new Product("Refrigerator", "Elektro002", 4500000, 200);
 
-class Sport extends Product {
+// microwave.printInfo();
+// refrigerator.printInfo();
 
-    static counter = 0;
-    constructor(title, quantity, price) {
-        super(title, `SPORT-${Sport.counter}`, quantity, price);
-        Sport.counter++;
-    }
+// Asynchronous
 
-    showType() {
-        console.log("Type Sport")
-    }
-}
-
-
-const refrigerator = new Electronic("Kulkas", 10, 2500000)
-const microwave = new Electronic("Microwave", 40, 3000000);
+// Node JS ==> SINGLE THREAD
+// Jalan satu persatu setiap programnya
 
 
-const basketBall = new Sport("Bola Basket", 200, 400000);
-const baseBallBat = new Sport("Tongkat Baseball", 100, 800000);
+const firstUrl = 'https://www.first-website.co.id' // ==> 4 Detik
+const secondUrl = 'https://www.second-website.co.id' // ==> 2 Detik
+const thirdUrl = 'https://www.third-website.co.id' // ==> 3 Detik
+// Berurutan
 
+// Callback
 
-// new Product
-// Udah punya properties ==> judul, sku, quantity, price
-
-// const firstProduct = new Product("Kulkas", "ELEKTRONIK-001", 10, 2000000)
-// const secondProduct = new Product("Microwave", "ELEKTRONIK-002", 10, 2000000);
-// const thirdProduct = new Product("Blender", "ELEKTRONIK-003", 10, 2000000);
-
-
-// STATIC PROPERTY = property milik class
-// NORMAL PROPERTY = property milik object
-
-
-// CLASS
-// OBJECT
-
-
-// CLUSTER RUMAH
-// DESAINER SAMA BLUEPRINT RUMAH = CLASS
-// RUMAH ASLI = OBJECT
-
-// JENDELA, PINTU, ATAP, KAMAR MANDI, KAMAR TIDUR
-
-// JENDELA 3, PINTU 2, ATAP WARNA HITAM, KAMAR MANDI 2 DLL
-
-
-// ASYNCHRONOUS
-
-
-// CALLBACK = FUNCTION YANG DIPANGGIL DIDALAM FUNCTION
-
-// Memunculkan download progress
-
-// Synchronous
-
-// const showDownload = (timer, message, callback) => {
+// const downloadUrl = (url, timer, callback) => {
 
 //     setTimeout(() => {
-//         console.log(message)
+//         console.log(`${url} completed...`);
 //         callback();
 //     }, timer)
 // }
 
-// showDownload(1000, "Download first url", () => {
-//     showDownload(2000, "Download second url", () => {
-//         showDownload(3000, "Download third url", () => {
-//            showDownload(1000, "Download fourth url", () => {
-//             showDownload(2000, "Download fifth url", () => {
-//                 console.log("completed")
-//             })
-//            })
+// downloadUrl(firstUrl, 4000, () => {
+//     downloadUrl(secondUrl, 2000, () => {
+//         downloadUrl(thirdUrl, 3000, () => {
+//             console.log(`All downloads completed....`)
 //         })
 //     })
 // })
 
 
-// PROMISE
+// Syntax lama ES5 - Promise
+// Promise cuma Object untuk menghandle program asynchronous
 
-const showDownload = (timer, message) => {
+
+// Promise
+
+const downloadUrl = (url, timer) => {
 
     return new Promise((resolve, reject) => {
-        // resolve = kondisi sukses
-        // reject = kondisi failed / gagal
-
-        if(message.length === 0) {
-            reject("Message mustn't empty")
-        } else {
-            setTimeout(() => {
-                console.log(message)
-                resolve();
-            }, timer)
-        }
-
+        // resolve => untuk menghandle success condition
+        // reject => untuk menghandle error condition
+        setTimeout(() => {
+            console.log(`${url} completed...`);
+            resolve();
+        }, timer)
     })
 }
 
-// showDownload(1000, "Download first url...")
+
+// downloadUrl(firstUrl, 4000)
 //     .then(() => {
-//         return showDownload(2000, "Download second url....")
-//     })
-//     .then(() => {
-//         return showDownload(3000, "Download third url....")
+//         return downloadUrl(secondUrl, 2000)
 //     })
 //     .then(() => {
-//         return showDownload(3000, "")
+//         return downloadUrl(thirdUrl, 3000)
 //     })
-//     .catch(err => {
-//         console.log(err)
+//     .then(() => {
+//         console.log(`All downloads completed....`)
 //     })
 
+// Syntax ES8 - ASYNC AWAIT
+// Handle promise
 
-// ASYNC AWAIT ==> ES8
+const showDownloads = async () => {
 
-
-const printLog = async () => {
-
-    try {
-        await showDownload(1000, "Download first url...")
-        await showDownload(2000, "Download second url...")
-        await showDownload(3000, "Download third url...")
-    } catch(err) {
-        console.log(err)
-    }
+    await downloadUrl(firstUrl, 4000)
+    await downloadUrl(secondUrl, 2000)
+    await downloadUrl(thirdUrl, 3000)
+    console.log(`All downloads completed....`)
 }
 
+showDownloads();
 
-printLog();
+
+
+
+
+

@@ -1,8 +1,11 @@
+// DOM = Document Object Model
+// HTML tag pake syntax OOP
+
 class Game {
 
-    constructor(title, platform, developer) {
+    constructor(title, platforms, developer) {
         this.title = title;
-        this.platform = platform;
+        this.platforms = platforms;
         this.developer = developer;
     }
 }
@@ -13,69 +16,64 @@ const gameList = [
     new Game("Shadow of the Tomb Raider", "PC, PS4", "Eidos Montreal")
 ]
 
+addEventListener("load", (e) => {
 
+    populateGames();
 
-window.onload = (event) => {
-    console.log("page is fully loaded");
+    // FORMS
+    const titleForm = document.getElementById("game-title");
+    const platformsForm = document.getElementById("game-platform");
+    const developerForm = document.getElementById("game-developer");
 
-    // Populate Table
-    populateData();
-
+    // BUTTON
     const addButton = document.getElementById("add-button");
 
     addButton.addEventListener("click", (e) => {
 
-        const titleData = document.getElementById("game-title");
-        const platformData = document.getElementById("game-platform");
-        const developerData = document.getElementById("game-developer");
+        const addGame = new Game(titleForm.value, platformsForm.value, developerForm.value);
 
-        const newGame = new Game(titleData.value, platformData.value, developerData.value);
+        gameList.push(addGame);
 
-        gameList.push(newGame)
-
-        populateData();
-
-        
-        // RESET FORM INPUT
-        titleData.value = ""
-        platformData.value = ""
-        developerData.value = ""
+        // Render ulang array
+        populateGames();
     })
-};
 
-const populateData = () => {
+})
+
+const populateGames = () => {
 
     const tableBody = document.getElementById("table-body");
-    
-    // Reset Table Body menjadi kosong
+
+    // reset ulang table
     tableBody.innerHTML = ""
 
     for(let i = 0; i < gameList.length; i++) {
 
-        const currentRow = tableBody.insertRow(i);
+        const gameRow = tableBody.insertRow(i);
 
-        const cell1 = currentRow.insertCell(0);
-        const cell2 = currentRow.insertCell(1);
-        const cell3 = currentRow.insertCell(2);
-        const cell4 = currentRow.insertCell(3);
+        const titleCell = gameRow.insertCell(0);
+        const platformsCell = gameRow.insertCell(1);
+        const developerCell = gameRow.insertCell(2);
+        const deleteButtonCell = gameRow.insertCell(3);
 
-        cell1.innerHTML = gameList[i].title;
-        cell2.innerHTML = gameList[i].platform;
-        cell3.innerHTML = gameList[i].developer;
+        titleCell.innerHTML = gameList[i].title;
+        platformsCell.innerHTML = gameList[i].platforms;
+        developerCell.innerHTML = gameList[i].developer;
 
-        // cell 4 delete button
+        // Create delete button
         const deleteButton = document.createElement("button");
-        deleteButton.classList.add("btn", "btn-error");
-        deleteButton.textContent = "DELETE"
+        deleteButton.innerHTML = "DELETE"
+        deleteButton.classList.add("btn", "btn-error")
+        deleteButtonCell.append(deleteButton)
 
         deleteButton.addEventListener("click", (e) => {
-            const deletedRow = e.target.parentElement.parentElement
-            
-            deletedRow.innerHTML = ""
-            // splice(start, deleteCount)
-            gameList.splice(i, 1);
-        })
 
-        cell4.append(deleteButton);
+            // Hapus object yang diselect dari gameList Array
+            gameList.splice(i, 1);
+            
+            // Render ulang
+            populateGames();
+        })
     }
 }
+
