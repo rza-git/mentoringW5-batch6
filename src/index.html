@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Entry</title>
+    <link href="./output.css" rel="stylesheet">
+</head>
+<body class="min-h-screen w-full bg-[#aec9c9]">
+    <div class="container mx-auto ">
+        <div class="p-3 mb-3">
+            <h1 class="font-bold">CREATE NEW GAME</h1>
+            <form>
+                <div class="mb-3">
+                    <h2 class="py-2">Title</h2>
+                    <input type="text" id="game-title" placeholder="Insert new title here..." class="input input-bordered input-primary w-full max-w-xs" />
+                </div>
+                <div class="mb-3">
+                    <h2 class="py-2">Platform</h2>
+                    <input type="text" id="game-platform" placeholder="Insert new platform here..." class="input input-bordered input-primary w-full max-w-xs" />
+                </div>
+                <div class="mb-3">
+                    <h2 class="py-2">Developer</h2>
+                    <input type="text" id="game-developer" placeholder="Insert new developer here..." class="input input-bordered input-primary w-full max-w-xs" />
+                </div>
+                <button type="button" id="add-button" class="btn btn-success">ADD BUTTON</button>
+            </form>
+        </div>
+        <hr>
+        <div class="overflow-x-auto">
+            <table class="table table-zebra">
+              <!-- head -->
+              <thead>
+                <tr>
+                  <th>TITLE</th>
+                  <th>PLATFORM</th>
+                  <th>DEVELOPER</th>
+                  <th>ACTION</th>
+                </tr>
+              </thead>
+              <tbody id="table-body">
+              </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="index.js"></script>
+</body>
+</html>
